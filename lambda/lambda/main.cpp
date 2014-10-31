@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "Auto.h"
+
 template < typename T>
 void BubbleSort(T *, int, bool(*)(T, T));
 
@@ -18,6 +20,9 @@ bool asc(T a, T b) { return a > b; }
 
 template < typename T>
 bool desc(T a, T b) { return a < b; }
+
+template <typename T >
+void printArray(T  vector[]);
 
 int main(int argc, const char * argv[]) {
     
@@ -29,7 +34,6 @@ int main(int argc, const char * argv[]) {
     std::cin >> n;
     
     int enteros[n];
-    
     
     /* Establecer la semilla del generador de números aleatorios */
     srand((unsigned int) time(nullptr));
@@ -45,16 +49,59 @@ int main(int argc, const char * argv[]) {
     /* Ordenar el arreglo */
     
    // auto compara = [](int a, int b) {return a > b;} ;
+   // BubbleSort<int>(enteros, n, desc);
     
-    BubbleSort<int>(enteros, n, [](int a, int b) { return a > b; });
+    BubbleSort<int>(enteros, n, [](int a, int b) { return a < b; });
     
     /* Imprimir el vector ordenado */
     
-    for (auto elemento : enteros) {
-        std::cout << elemento << " ";
+    //printArray<int>(enteros);
+    
+    for (auto item : enteros) {
+        std::cout << item;
     }
     
     std::cout << std::endl;
+    
+    
+    /* Declarar un arreglo de autos */
+    const int ncoches = 3;
+    Auto taller[ncoches];
+    
+    taller[0] = Auto();
+    taller[1] = Auto("HYU-678", "Honda", 2012, "Azul");
+    taller[2] = Auto("VVN-098", "Toyota", 2009, "Gris");
+    
+    /* Imprimir el arreglo de autos */
+    
+    std::cout << "------------------------------------------------------ " << std::endl;
+    std::cout << "------------------- Lote de autos -------------------- " << std::endl;
+    std::cout << "------------------------------------------------------ " << std::endl;
+    
+    
+    for (auto item : taller) {
+        std::cout << item;
+    }
+    
+   // printArray<Auto>(taller);
+    
+    /* Ordenar el arreglo de autos */
+    
+    BubbleSort<Auto>(taller, ncoches, asc);
+    
+    
+    /* Imprimir el arreglo de autos */
+    
+    std::cout << "------------------------------------------------------ " << std::endl;
+    std::cout << "--------- Lote de autos ordenados -------------------- " << std::endl;
+    std::cout << "------------------------------------------------------ " << std::endl;
+    
+    for (auto item : taller) {
+        std::cout << item;
+    }
+    
+   // printArray<Auto>(taller);
+
     
     return 0;
 }
@@ -76,3 +123,12 @@ void BubbleSort(T * vector, int n, bool orden(T, T))
         }
     }
 }
+
+///* Función genérica de impresión */
+//template <typename T>
+//void printArray(T  vector[])
+//{
+//    for (auto item : vector) {
+//        std::cout << item;
+//    }
+//}
