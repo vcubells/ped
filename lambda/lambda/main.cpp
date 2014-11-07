@@ -22,7 +22,7 @@ template < typename T>
 bool desc(T a, T b) { return a < b; }
 
 template <typename T >
-void printArray(T  vector[]);
+void printArray(T vector[]);
 
 int main(int argc, const char * argv[]) {
     
@@ -124,11 +124,12 @@ void BubbleSort(T * vector, int n, bool orden(T, T))
     }
 }
 
-///* Función genérica de impresión */
-//template <typename T>
-//void printArray(T  vector[])
-//{
-//    for (auto item : vector) {
-//        std::cout << item;
-//    }
-//}
+/* Función genérica de impresión */
+
+template <typename T>
+void printArray(T vector[])
+{
+    for (auto item : vector) {
+        std::cout << item;
+    }
+}
