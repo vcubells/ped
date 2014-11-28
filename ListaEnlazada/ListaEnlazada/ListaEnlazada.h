@@ -218,6 +218,13 @@ std::ostream & operator <<(std::ostream & os, ListaEnlazada<T> & lista)
         os << p;
     }
     
+//    Nodo<T> * begin = lista.At(0);
+//    Nodo<T> * end = lista.At(count);
+//    
+//    for (; begin != end; ++begin) {
+//        os << *begin;
+//    }
+    
     return os;
 }
 
