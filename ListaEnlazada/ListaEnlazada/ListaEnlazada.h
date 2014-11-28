@@ -15,28 +15,46 @@
 
 template <class T>
 class ListaEnlazada {
-private:
+protected:
     Nodo<T> * first = nullptr;
     int count = 0;
+    
+    /* Iterador de la lista */
+    class Iterator {
+        ListaEnlazada<T> * data;
+        int position;
+    public:
+        Iterator(ListaEnlazada<T> * _data, int _position):data(_data),position(_position) {}
+        
+        Nodo<T> operator*() const { return *(data->At(position)); }
+        const Iterator& operator++() { ++position; return *this; }
+        bool operator!=(const Iterator& it) const { return position != it.position; }
+    };
     
 public:
     ListaEnlazada();
     virtual ~ListaEnlazada();
     
-    int size();
-    bool empty();
+    virtual int size();
+    virtual bool empty();
     
-    void insert(T info, int pos);
-    void insertFront(T info);
-    void insertBack(T info);
+    virtual void insert(T info, int pos);
+    virtual void insertFront(T info);
+    virtual void insertBack(T info);
     
-    void clear();
-    Nodo<T> * remove(int pos);
-    Nodo<T> * removeFront();
-    Nodo<T> * removeBack();
+    virtual void clear();
+    
+    virtual Nodo<T> * remove(int pos);
+    virtual Nodo<T> * removeFront();
+    virtual Nodo<T> * removeBack();
+    
+    Nodo<T> * At(int pos);
     
     template <typename Tn>
     friend std::ostream & operator <<(std::ostream & os, ListaEnlazada<Tn> & lista);
+    
+    Iterator begin() { return { this, 0 }; }
+    Iterator end()   { return { this, count }; }
 };
 
 template <class T>
@@ -165,13 +183,39 @@ Nodo<T> * ListaEnlazada<T>::removeBack()
 }
 
 template <class T>
+Nodo<T> * ListaEnlazada<T>::At(int pos)
+{
+    int i = 0;
+    Nodo<T> * aux = nullptr;
+    
+    if (pos < 0 || pos >= count) {
+        return aux;
+    }
+    
+    aux = first;
+    
+    while (i < pos) {
+        aux = aux->getNext();
+        ++i;
+    }
+    
+    return aux;
+}
+
+
+template <class T>
 std::ostream & operator <<(std::ostream & os, ListaEnlazada<T> & lista)
 {
-    Nodo<T> * temp = lista.first;
+//    Nodo<T> * temp = lista.first;
+//    
+//    while (temp) {
+//        os << *temp;
+//        temp = temp->getNext();
+//    }
     
-    while (temp) {
-        os << *temp;
-        temp = temp->getNext();
+    for (auto p : lista)
+    {
+        os << p;
     }
     
     return os;
